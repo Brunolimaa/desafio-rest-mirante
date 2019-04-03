@@ -104,6 +104,21 @@ public class ClienteResource {
 		historico.setTipoOperacao("ALTERACAO");
 		historicoService.save(historico);
 		
+		Contato contato = new Contato();
+		contato.setEmail(entity.getContato().getEmail());
+		contato.setTelefone(entity.getContato().getTelefone());
+		entity.getContato().setId(contatoService.save(contato).getId());
+
+		Endereco endereco = new Endereco();
+		
+		endereco.setCep(entity.getEndereco().getCep());
+		endereco.setBairro(entity.getEndereco().getBairro());
+		endereco.setCidade(entity.getEndereco().getCidade());
+		endereco.setComplemento(entity.getEndereco().getComplemento());
+		endereco.setLogradouro(entity.getEndereco().getLogradouro());
+		endereco.setUf(entity.getEndereco().getUf());
+		entity.getEndereco().setId(serviceEndereco.save(endereco).getId());
+		
 		entity.setId(id);
 		service.update(entity);
 		return ResponseEntity.noContent().build();
